@@ -111,6 +111,9 @@ class InstrumentMethod extends MethodNode {
 					// check for Stack.alloc(Class):
 					if (min.owner.equals(STACK_NAME) && min.name.equals("alloc") && min.desc.equals(STACK_ALLOC_CLASS_DESC)) {
 						AbstractInsnNode insnBefore = min.getPrevious();
+						while (insnBefore instanceof LineNumberNode || insnBefore instanceof LabelNode) {
+						    insnBefore = insnBefore.getPrevious();
+						}
 						Type type = null;
 						
 						if (insnBefore instanceof LdcInsnNode && ((LdcInsnNode)insnBefore).cst instanceof Type) {
@@ -118,7 +121,12 @@ class InstrumentMethod extends MethodNode {
 							removeInsn(insnBefore);
 						}
 						else {
-							logError("first parameter of Stack.alloc(Class) must be constant");
+						    System.out.println(insnBefore);
+						    System.out.println();
+						    for (AbstractInsnNode node : instructions.toArray()) {
+						        System.out.println(node);
+						    }
+							logError("first parameter of Stack.alloc(Class) must be constant. Found: " + (insnBefore instanceof LdcInsnNode ? ((LdcInsnNode)insnBefore).cst : insnBefore.getClass()));
 						}
 						
 						if (!staticAllocation) {

@@ -15,6 +15,7 @@
     </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javadoc.opts>-Xdoclint:none</javadoc.opts>
     </properties>
     <licenses>
         <license>
@@ -111,6 +112,7 @@
                 <version>2.7</version>
                 <configuration>
                     <excludePackageNames>cz</excludePackageNames>
+                    <additionalparam>${javadoc.opts}</additionalparam>
                 </configuration>
                 <executions>
                     <execution>
