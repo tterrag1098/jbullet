@@ -8,4 +8,7 @@ target
 *.war
 *.ear
 
-
+/bin
+/.settings
+*.classpath
+*.project
